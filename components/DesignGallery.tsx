@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Star, Tag, Smartphone, Shirt, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { publicAssetUrl } from '../assetUrl';
 
 interface DesignItem {
   id: string;
@@ -17,16 +18,16 @@ const DESIGNS: DesignItem[] = [
     category: '头部配饰',
     description: '采用高品质纯棉材质，正面点缀 “沉默的副驾” SilentCopilot 标志性刺绣标识。本系列融合了 2026 年流行色趋势，旨在为每一位“沉默的副驾”提供既低调又具科技感的出行单品。',
     images: [
-      '/cap_model_cover.jpeg',
-      '/Generated Image December 23, 2025 - 7_35PM.jpeg',
-      '/cap_deep_black_side.jpeg',
-      '/cap_red_side.jpeg',
-      '/cap_aurora_blue_side.jpeg',
-      '/cap_purple_side.jpeg',
-      '/cap_sand_beige_side.jpeg',
-      '/cap_clean_white_side.jpeg',
-      '/cap_bronze_side.jpeg',
-      '/cap_black_side.jpeg'
+      'cap_model_cover.jpeg',
+      'Generated Image December 23, 2025 - 7_35PM.jpeg',
+      'cap_deep_black_side.jpeg',
+      'cap_red_side.jpeg',
+      'cap_aurora_blue_side.jpeg',
+      'cap_purple_side.jpeg',
+      'cap_sand_beige_side.jpeg',
+      'cap_clean_white_side.jpeg',
+      'cap_bronze_side.jpeg',
+      'cap_black_side.jpeg'
     ],
     price: ''
   },
@@ -36,10 +37,10 @@ const DESIGNS: DesignItem[] = [
     category: '服装服饰',
     description: '本系列包含高科技排汗 Tee 与特别版丹宁牛仔衬衫。Tee 采用 AI 源代码流动设计，象征数据沉淀；牛仔衬衫则融合西部经典与激光刻蚀科技，专为现代数字游民打造。',
     images: [
-      '/tee_design_1.jpeg',
-      '/tee_design_2.jpeg',
-      '/tee_design_3.jpeg',
-      '/tee_design_cowboy.jpeg'
+      'tee_design_1.jpeg',
+      'tee_design_2.jpeg',
+      'tee_design_3.jpeg',
+      'tee_design_cowboy.jpeg'
     ],
     price: ''
   },
@@ -49,7 +50,7 @@ const DESIGNS: DesignItem[] = [
     category: '车载配件',
     description: '极简主义出风口支架，采用喷砂太空灰钛金属材质。极简圆柱体设计，内置强力磁吸阵列，即便在最崎岖的路段也能确保手机稳固，是极客驾驶者的得力助手。',
     images: [
-      '/vent_holder_design.jpeg'
+      'vent_holder_design.jpeg'
     ],
     price: ''
   }
@@ -94,7 +95,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
           {item.images.map((img, idx) => (
             <img 
               key={idx}
-              src={img} 
+              src={publicAssetUrl(img)} 
               alt={`${item.name} - View ${idx + 1}`}
               className="w-full h-full object-cover flex-shrink-0"
             />

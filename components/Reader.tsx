@@ -2,6 +2,7 @@
 import React from 'react';
 import { ExternalLink, Clock, User, Quote, Terminal, MessageSquare } from 'lucide-react';
 import { Chapter } from '../types';
+import { publicAssetUrl } from '../assetUrl';
 
 interface ReaderProps {
   chapter: Chapter;
@@ -138,7 +139,7 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
             <div className="flex flex-col items-center gap-4">
               <div className="bg-white p-2 rounded-xl shadow-xl shadow-blue-500/10">
                 <img 
-                  src="/qrcode.jpg" 
+                  src={publicAssetUrl('qrcode.jpg')}
                   alt="沉默的副驾 公众号" 
                   className="w-24 h-24 md:w-28 md:h-28 object-contain"
                 />

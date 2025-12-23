@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import Reader from './components/Reader';
 import DesignGallery from './components/DesignGallery';
 import { STORY_DATA } from './constants';
+import { publicAssetUrl } from './assetUrl';
 
 const App: React.FC = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
@@ -233,8 +234,8 @@ const App: React.FC = () => {
                   <div className="flex flex-col items-center gap-3">
                     <div className="bg-white p-2 rounded-xl shadow-xl shadow-blue-500/10">
                       <img 
-                        src="/qrcode.jpg" 
-                        alt="沉默的副驾 公众号" 
+                        src={publicAssetUrl('qrcode.jpg')}
+                        alt="沉默的副驾 公众号"
                         className="w-24 h-24 md:w-28 md:h-28 object-contain"
                       />
                     </div>
