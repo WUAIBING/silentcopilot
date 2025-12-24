@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Rocket, Archive, Cpu, Github, Palette, LayoutGrid } from 'lucide-react';
+import { Menu, X, Rocket, Archive, Cpu, Github, Palette, LayoutGrid, BookOpen } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Reader from './components/Reader';
 import DesignGallery from './components/DesignGallery';
@@ -151,34 +151,39 @@ const App: React.FC = () => {
                     </div>
                   ) : (
                     <>
-                      <button 
-                        onClick={() => {
-                          setCurrentView('chapters');
-                          setSearchQuery('');
-                          setSelectedIdx(null);
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                        className={`text-3xl md:text-4xl font-bold transition-colors text-left ${
-                          currentView === 'chapters' ? 'text-white' : 'text-gray-500 hover:text-gray-400'
-                        }`}
-                      >
-                        《沉默的副驾》
-                      </button>
-                      <button 
-                        onClick={() => {
-                          setCurrentView('designs');
-                          setSearchQuery('');
-                          setSelectedIdx(null);
-                        }}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
-                          currentView === 'designs' 
-                            ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.1)]' 
-                            : 'bg-gray-900/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
-                        }`}
-                      >
-                        <Palette className="w-5 h-5" />
-                        <span className="font-bold tracking-wide">周边设计</span>
-                      </button>
+                      <div className="flex flex-row items-center gap-4">
+                        <button 
+                          onClick={() => {
+                            setCurrentView('chapters');
+                            setSearchQuery('');
+                            setSelectedIdx(null);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
+                            currentView === 'chapters'
+                              ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.1)]'
+                              : 'bg-gray-900/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
+                          }`}
+                        >
+                          <BookOpen className="w-5 h-5" />
+                          <span className="font-bold tracking-wide">Read</span>
+                        </button>
+                        <button 
+                          onClick={() => {
+                            setCurrentView('designs');
+                            setSearchQuery('');
+                            setSelectedIdx(null);
+                          }}
+                          className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
+                            currentView === 'designs' 
+                              ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.1)]' 
+                              : 'bg-gray-900/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
+                          }`}
+                        >
+                          <Palette className="w-5 h-5" />
+                          <span className="font-bold tracking-wide">Design</span>
+                        </button>
+                      </div>
                     </>
                   )}
                 </div>
