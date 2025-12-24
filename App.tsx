@@ -65,7 +65,7 @@ const App: React.FC = () => {
           }}
           className="font-bold text-blue-400 text-sm tracking-tighter flex items-center gap-2 active:scale-95 transition-transform"
         >
-          <Rocket className="w-4 h-4" /> 沉默的副驾 SilentCopilot
+          沉默的副驾 SilentCopilot
         </button>
         <div className="w-10"></div>
       </header>
