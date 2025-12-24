@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ShoppingBag, Star, Tag, Smartphone, Shirt, ShoppingCart, ChevronLeft, ChevronRight, Share2 } from 'lucide-react';
 import { publicAssetUrl } from '../assetUrl';
-import html2canvas from 'html2canvas';
 
 interface DesignItem {
   id: string;
@@ -85,8 +84,44 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
     setCurrentImgIdx((prev) => (prev - 1 + item.images.length) % item.images.length);
   };
 
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!cardRef.current) return;
+
+    try {
+      // Dynamic import to avoid SSR/Build issues
+      const html2canvas = (await import('html2canvas')).default;
+      
+      const canvas = await html2canvas(cardRef.current, {
+        useCORS: true,
+        backgroundColor: '#111827', // dark background matching the theme
+        scale: 2, // higher resolution
+      });
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              [blob.type]: blob
+            })
+          ]);
+          alert('海报已复制到剪贴板！');
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          alert('复制失败，请重试');
+        }
+      });
+    } catch (error) {
+      console.error('Error generating image:', error);
+      alert('生成海报失败，请重试');
+    }
+  };
+
   return (
-    <div className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-blue-500/30 transition-all duration-500 shadow-xl">
+    <div ref={cardRef} className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-blue-500/30 transition-all duration-500 shadow-xl">
       {/* Image Carousel Container */}
       <div className="aspect-square overflow-hidden bg-gray-950 relative">
         <div 
