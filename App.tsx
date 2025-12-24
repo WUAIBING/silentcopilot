@@ -88,6 +88,15 @@ const App: React.FC = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         className="w-80 h-full hidden md:flex"
+        currentView={currentView}
+        onViewChange={(view) => {
+          setCurrentView(view);
+          setSelectedIdx(null);
+          setSearchQuery('');
+          if (view === 'chapters') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
       />
 
       {/* Mobile Sidebar Overlay */}
@@ -114,6 +123,16 @@ const App: React.FC = () => {
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               className="w-full flex-1"
+              currentView={currentView}
+              onViewChange={(view) => {
+                setCurrentView(view);
+                setSelectedIdx(null);
+                setSearchQuery('');
+                setIsSidebarOpen(false); // Close sidebar on mobile when switching view
+                if (view === 'chapters') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
             />
           </div>
         </div>

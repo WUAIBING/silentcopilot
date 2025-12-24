@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Book, Calendar, User, Search, ChevronRight } from 'lucide-react';
+import { Book, Calendar, User, Search, ChevronRight, BookOpen, Palette } from 'lucide-react';
 import { Chapter } from '../types';
 
 interface SidebarProps {
@@ -11,6 +11,8 @@ interface SidebarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   className?: string;
+  currentView?: 'chapters' | 'designs';
+  onViewChange?: (view: 'chapters' | 'designs') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -20,7 +22,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   onHomeClick,
   searchQuery, 
   setSearchQuery,
-  className = ""
+  className = "",
+  currentView = 'chapters',
+  onViewChange
 }) => {
   const filteredChapters = chapters.filter(c => 
     (c.title?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
@@ -30,16 +34,30 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className={`flex flex-col bg-gray-900 border-r border-gray-800 overflow-hidden ${className}`}>
       <div className="flex-shrink-0 p-4 md:p-6 border-b border-gray-800">
-        <button 
-          onClick={onHomeClick}
-          className="w-full text-left group"
-          title="Back to home"
-        >
-          <h1 className="text-xl font-bold text-blue-400 mb-4 flex items-center gap-2 group-hover:text-blue-300 transition-colors">
-            <Book className="w-6 h-6" />
-            沉默的副驾 SilentCopilot
-          </h1>
-        </button>
+        <div className="flex items-center gap-2 mb-4">
+          <button 
+            onClick={() => onViewChange?.('chapters')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all ${
+              currentView === 'chapters'
+                ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]'
+                : 'bg-gray-800/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span className="font-bold tracking-wide text-sm">Read</span>
+          </button>
+          <button 
+            onClick={() => onViewChange?.('designs')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all ${
+              currentView === 'designs'
+                ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]'
+                : 'bg-gray-800/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
+            }`}
+          >
+            <Palette className="w-4 h-4" />
+            <span className="font-bold tracking-wide text-sm">Design</span>
+          </button>
+        </div>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
           <input 
