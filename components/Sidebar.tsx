@@ -34,6 +34,17 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside className={`flex flex-col bg-gray-900 border-r border-gray-800 overflow-hidden ${className}`}>
       <div className="flex-shrink-0 p-4 md:p-6 border-b border-gray-800">
+        <button 
+          onClick={onHomeClick}
+          className="w-full text-left group"
+          title="Back to home"
+        >
+          <h1 className="text-xl font-bold text-blue-400 mb-6 flex items-center gap-2 group-hover:text-blue-300 transition-colors">
+            <Book className="w-6 h-6" />
+            沉默的副驾 SilentCopilot
+          </h1>
+        </button>
+
         <div className="flex items-center gap-2 mb-4">
           <button 
             onClick={() => onViewChange?.('chapters')}
