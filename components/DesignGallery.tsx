@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { ShoppingBag, Star, Tag, Smartphone, Shirt, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { ShoppingBag, Star, Tag, Smartphone, Shirt, ShoppingCart, ChevronLeft, ChevronRight, Share2 } from 'lucide-react';
 import { publicAssetUrl } from '../assetUrl';
+import html2canvas from 'html2canvas';
 
 interface DesignItem {
   id: string;
@@ -165,6 +166,14 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
           >
             <Star className={`w-4 h-4 transition-transform group-hover/like:scale-110 ${isLiked ? 'fill-current' : ''}`} />
             {likes > 0 && <span className="text-xs font-bold font-mono">{likes}</span>}
+          </button>
+          
+          <button 
+            onClick={handleShare}
+            className="p-3 rounded-xl transition-all border flex items-center gap-2 bg-gray-800 border-gray-700 text-gray-400 hover:text-white hover:border-gray-600 hover:bg-gray-700"
+            title="分享海报"
+          >
+            <Share2 className="w-4 h-4" />
           </button>
         </div>
         <div className="mt-6 pt-4 border-t border-gray-800/50">
