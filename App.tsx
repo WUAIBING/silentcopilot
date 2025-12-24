@@ -178,14 +178,14 @@ const App: React.FC = () => {
                             setSelectedIdx(null);
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                           }}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
+                          className={`flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
                             currentView === 'chapters'
                               ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.1)]'
                               : 'bg-gray-900/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
                           }`}
+                          title="Read Chapters"
                         >
-                          <BookOpen className="w-5 h-5" />
-                          <span className="font-bold tracking-wide">Read</span>
+                          <BookOpen className="w-6 h-6" />
                         </button>
                         <button 
                           onClick={() => {
@@ -193,14 +193,14 @@ const App: React.FC = () => {
                             setSearchQuery('');
                             setSelectedIdx(null);
                           }}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
+                          className={`flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
                             currentView === 'designs' 
                               ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.1)]' 
                               : 'bg-gray-900/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
                           }`}
+                          title="View Designs"
                         >
-                          <Palette className="w-5 h-5" />
-                          <span className="font-bold tracking-wide">Design</span>
+                          <Palette className="w-6 h-6" />
                         </button>
                       </div>
                     </>

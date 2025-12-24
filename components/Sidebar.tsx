@@ -53,9 +53,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                 ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]'
                 : 'bg-gray-800/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
             }`}
+            title="Read Chapters"
           >
-            <BookOpen className="w-4 h-4" />
-            <span className="font-bold tracking-wide text-sm">Read</span>
+            <BookOpen className="w-5 h-5" />
           </button>
           <button 
             onClick={() => onViewChange?.('designs')}
@@ -64,9 +64,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                 ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]'
                 : 'bg-gray-800/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
             }`}
+            title="View Designs"
           >
-            <Palette className="w-4 h-4" />
-            <span className="font-bold tracking-wide text-sm">Design</span>
+            <Palette className="w-5 h-5" />
           </button>
         </div>
         <div className="relative">
