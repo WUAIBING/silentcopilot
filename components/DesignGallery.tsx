@@ -152,8 +152,8 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
         </p>
         
         <div className="flex items-center gap-4">
-          <button className="flex-1 bg-gray-800 text-gray-400 font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-sm cursor-not-allowed border border-gray-700">
-            <ShoppingCart className="w-4 h-4" /> Designed by AI
+          <button className="flex-1 bg-gray-800 text-gray-400 font-medium py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-xs cursor-not-allowed border border-gray-700">
+            <ShoppingCart className="w-3.5 h-3.5" /> Designed by AI
           </button>
           <button 
             onClick={handleLike}
