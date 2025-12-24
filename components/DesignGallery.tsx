@@ -153,7 +153,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
         
         <div className="flex items-center gap-4">
           <button className="flex-1 bg-gray-800 text-gray-400 font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 text-sm cursor-not-allowed border border-gray-700">
-            <ShoppingCart className="w-4 h-4" /> 概念设计，暂无生产计划
+            <ShoppingCart className="w-4 h-4" /> Designed by AI
           </button>
           <button 
             onClick={handleLike}
@@ -188,7 +188,7 @@ const DesignGallery: React.FC = () => {
 
       {/* Design Concept Section */}
       <div className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 border border-blue-500/20 rounded-3xl p-8 md:p-12 mb-20 text-center">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">设计理念：沉默的共同演化</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-4">设计理念：沉默的共同演化</h2>
         <p className="max-w-2xl mx-auto text-gray-400 leading-relaxed">
           我们的周边设计不仅仅是商品，更是《沉默的副驾》精神的延伸。
           每一件配饰都融入了算法美学与长途驾驶的实用主义，旨在为您的现实生活注入一丝科幻的质感。
