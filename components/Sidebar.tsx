@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Book, Calendar, User, Search, ChevronRight, BookOpen, Palette } from 'lucide-react';
+import { Book, Calendar, User, Search, ChevronRight, BookOpen, Palette, Film } from 'lucide-react';
 import { Chapter } from '../types';
 
 interface SidebarProps {
@@ -11,8 +11,8 @@ interface SidebarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   className?: string;
-  currentView?: 'chapters' | 'designs';
-  onViewChange?: (view: 'chapters' | 'designs') => void;
+  currentView?: 'chapters' | 'designs' | 'videos';
+  onViewChange?: (view: 'chapters' | 'designs' | 'videos') => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
