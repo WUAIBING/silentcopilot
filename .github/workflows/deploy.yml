@@ -38,6 +38,8 @@ jobs:
         run: npm ci || npm install
       - name: Build
         run: npm run build
+        env:
+          VITE_BASE_PATH: /silentcopilot/
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
