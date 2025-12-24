@@ -1,15 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Rocket, Archive, Cpu, Github, Palette, LayoutGrid, BookOpen } from 'lucide-react';
+import { Menu, X, Rocket, Archive, Cpu, Github, Palette, LayoutGrid, BookOpen, Film } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Reader from './components/Reader';
 import DesignGallery from './components/DesignGallery';
+import VideoGallery from './components/VideoGallery';
 import { STORY_DATA } from './constants';
 import { publicAssetUrl } from './assetUrl';
 
 const App: React.FC = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  const [currentView, setCurrentView] = useState<'chapters' | 'designs'>('chapters');
+  const [currentView, setCurrentView] = useState<'chapters' | 'designs' | 'videos'>('chapters');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const mainRef = React.useRef<HTMLDivElement>(null);
@@ -90,7 +91,7 @@ const App: React.FC = () => {
         className="w-80 h-full hidden md:flex"
         currentView={currentView}
         onViewChange={(view) => {
-          setCurrentView(view);
+          setCurrentView(view as any); // Sidebar component might need update, but for now casting is safe if we don't update sidebar props type strictly yet
           setSelectedIdx(null);
           setSearchQuery('');
           if (view === 'chapters') {
@@ -125,7 +126,7 @@ const App: React.FC = () => {
               className="w-full flex-1"
               currentView={currentView}
               onViewChange={(view) => {
-                setCurrentView(view);
+                setCurrentView(view as any);
                 setSelectedIdx(null);
                 setSearchQuery('');
                 setIsSidebarOpen(false); // Close sidebar on mobile when switching view
@@ -202,6 +203,21 @@ const App: React.FC = () => {
                         >
                           <Palette className="w-6 h-6" />
                         </button>
+                        <button 
+                          onClick={() => {
+                            setCurrentView('videos');
+                            setSearchQuery('');
+                            setSelectedIdx(null);
+                          }}
+                          className={`flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border transition-all w-fit ${
+                            currentView === 'videos' 
+                              ? 'bg-purple-500/20 text-purple-400 border-purple-500/40 shadow-[0_0_20px_rgba(168,85,247,0.1)]' 
+                              : 'bg-gray-900/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
+                          }`}
+                          title="View AI Videos"
+                        >
+                          <Film className="w-6 h-6" />
+                        </button>
                       </div>
                     </>
                   )}
@@ -248,8 +264,10 @@ const App: React.FC = () => {
                     );
                   })}
                 </div>
-              ) : (
+              ) : currentView === 'designs' ? (
                 <DesignGallery />
+              ) : (
+                <VideoGallery />
               )}
 
               {/* Landing Page Footer */}

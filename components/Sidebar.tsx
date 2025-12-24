@@ -68,6 +68,17 @@ const Sidebar: React.FC<SidebarProps> = ({
           >
             <Palette className="w-5 h-5" />
           </button>
+          <button 
+            onClick={() => onViewChange?.('videos')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border transition-all ${
+              currentView === 'videos'
+                ? 'bg-purple-500/20 text-purple-400 border-purple-500/40 shadow-[0_0_15px_rgba(168,85,247,0.1)]'
+                : 'bg-gray-800/50 text-gray-500 border-gray-800 hover:border-gray-700 hover:text-gray-300'
+            }`}
+            title="View AI Videos"
+          >
+            <Film className="w-5 h-5" />
+          </button>
         </div>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />

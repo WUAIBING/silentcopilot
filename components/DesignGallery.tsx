@@ -53,6 +53,16 @@ const DESIGNS: DesignItem[] = [
       'vent_holder_design.jpeg'
     ],
     price: ''
+  },
+  {
+    id: 'design-004',
+    name: 'Google VEO 电影提示词：克隆伴侣',
+    category: 'AI 视频生成',
+    description: '专为 Google VEO 模型设计的电影级提示词。包含 "Silent Copilot: The Cloned Companions" 的完整分镜描述、视觉风格定义及光影设定。描述了自动驾驶汽车避让加拉帕戈斯龟，以及客厅中克隆宠物的神秘场景。Prompt: Cinematic sci-fi scene, 4k. A sleek autonomous car swerves to avoid a tortoise on a highway...',
+    images: [
+      'Generated Image December 23, 2025 - 7_35PM.jpeg'
+    ],
+    price: 'Free'
   }
 ];
 
