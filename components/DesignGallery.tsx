@@ -56,12 +56,10 @@ const DESIGNS: DesignItem[] = [
   },
   {
     id: 'design-004',
-    name: 'Google VEO 电影提示词：克隆伴侣',
-    category: 'AI 视频生成',
-    description: '专为 Google VEO 模型设计的电影级提示词。包含 "Silent Copilot: The Cloned Companions" 的完整分镜描述、视觉风格定义及光影设定。描述了自动驾驶汽车避让加拉帕戈斯龟，以及客厅中克隆宠物的神秘场景。Prompt: Cinematic sci-fi scene, 4k. A sleek autonomous car swerves to avoid a tortoise on a highway...',
-    images: [
-      'Generated Image December 23, 2025 - 7_35PM.jpeg'
-    ],
+    name: '“沉默的纽带”：象妈妈与小象毛绒玩偶套装',
+    category: 'Toy',
+    description: '基于《沉默的副驾》第8章感人情节设计。这套毛绒玩偶捕捉了被迫分离的象妈妈与小象之间的深情。设计提示词：Design a set of stuffed plush toys representing the mother elephant and her calf. The mother elephant should have a gentle, wise expression, while the calf looks up with longing. Use ultra-soft, premium grey plush fabric. The mother elephant has a subtle glowing "Silent Copilot" logo on her ear, symbolizing her journey to the stars. The calf on Earth wears a small heart-shaped tag. The style is heartwarming and cuddly, reflecting the emotional bond and the cost of longevity technology.',
+    images: [],
     price: 'Free'
   }
 ];
@@ -133,20 +131,30 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
   return (
     <div ref={cardRef} className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-amber-500/30 transition-all duration-500 shadow-xl">
       {/* Image Carousel Container */}
-      <div className="aspect-square overflow-hidden bg-gray-950 relative">
-        <div 
-          className="flex h-full transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${currentImgIdx * 100}%)` }}
-        >
-          {item.images.map((img, idx) => (
-            <img 
-              key={idx}
-              src={publicAssetUrl(img)} 
-              alt={`${item.name} - View ${idx + 1}`}
-              className="w-full h-full object-cover flex-shrink-0"
-            />
-          ))}
-        </div>
+      <div className="aspect-square overflow-hidden bg-gray-950 relative flex items-center justify-center">
+        {item.images.length > 0 ? (
+          <div 
+            className="flex h-full transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentImgIdx * 100}%)` }}
+          >
+            {item.images.map((img, idx) => (
+              <img 
+                key={idx}
+                src={publicAssetUrl(img)} 
+                alt={`${item.name} - View ${idx + 1}`}
+                className="w-full h-full object-cover flex-shrink-0"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-gray-700 p-8 text-center animate-pulse">
+            <div className="w-16 h-16 mb-4 opacity-20">
+              <ShoppingBag className="w-full h-full" />
+            </div>
+            <p className="text-xs uppercase tracking-widest font-mono">Design in Progress</p>
+            <p className="text-[10px] mt-2 opacity-50 italic">Waiting for Nano Banana Pro</p>
+          </div>
+        )}
 
         {/* Navigation Overlays */}
         {item.images.length > 1 && (
