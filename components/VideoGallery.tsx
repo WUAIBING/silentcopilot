@@ -96,10 +96,10 @@ const VideoGallery: React.FC = () => {
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="bg-gradient-to-br from-purple-600/10 to-blue-600/10 border border-purple-500/20 rounded-3xl p-8 md:p-12 mb-20 text-center">
+      <div className="bg-gradient-to-br from-red-600/10 to-amber-500/10 border border-amber-500/20 rounded-3xl p-8 md:p-12 mb-20 text-center">
         <div className="flex justify-center mb-6">
-          <div className="p-4 bg-purple-500/10 rounded-full border border-purple-500/20 shadow-[0_0_30px_rgba(168,85,247,0.15)]">
-            <Film className="w-12 h-12 text-purple-400" />
+          <div className="p-4 bg-red-500/10 rounded-full border border-amber-500/20 shadow-[0_0_30px_rgba(245,158,11,0.15)]">
+            <Film className="w-12 h-12 text-amber-300" />
           </div>
         </div>
         <h2 className="text-xl md:text-2xl font-bold text-white mb-4">AI 影像实验室</h2>
@@ -110,7 +110,7 @@ const VideoGallery: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
           {VIDEOS.map((video) => (
-            <div key={video.id} className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-purple-500/30 transition-all duration-500 shadow-xl">
+            <div key={video.id} className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-amber-500/30 transition-all duration-500 shadow-xl">
               <div className="aspect-video bg-gray-950 relative flex items-center justify-center group-hover:bg-gray-900 transition-colors">
                 {!!video.cornerTitle && (
                   <div className="absolute top-3 left-3 z-10 pointer-events-none">
@@ -129,11 +129,11 @@ const VideoGallery: React.FC = () => {
                   />
                 ) : (
                   <>
-                    <Play className="w-16 h-16 text-gray-700 group-hover:text-purple-400 transition-colors duration-500" />
+                    <Play className="w-16 h-16 text-gray-700 group-hover:text-amber-300 transition-colors duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
                     <div className="absolute bottom-4 left-4 right-4">
                       {video.status === 'coming_soon' && (
-                        <span className="px-2 py-1 bg-purple-500/20 text-purple-300 text-[10px] font-bold uppercase tracking-widest rounded mb-2 inline-block">
+                        <span className="px-2 py-1 bg-red-500/20 text-amber-200 text-[10px] font-bold uppercase tracking-widest rounded mb-2 inline-block">
                           Coming Soon
                         </span>
                       )}

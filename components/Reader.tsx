@@ -56,14 +56,14 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
       if (currentAiBlock) {
         elements.push(
           <div key={`ai-${keyPrefix}`} className="mb-12 group">
-            <div className="flex items-center gap-2 text-blue-500/60 mb-4 group-hover:text-blue-500 transition-colors">
+            <div className="flex items-center gap-2 text-amber-400/70 mb-4 group-hover:text-amber-400 transition-colors">
               <Terminal className="w-4 h-4" />
               <span className="text-xs font-mono uppercase tracking-widest">{currentAiBlock.name} Response</span>
             </div>
-            <div className="bg-blue-950/20 border border-blue-900/30 rounded-2xl p-6 md:p-8 shadow-inner">
+            <div className="bg-red-950/20 border border-amber-500/20 rounded-2xl p-6 md:p-8 shadow-inner">
               <div className="space-y-4">
                 {currentAiBlock.lines.map((line, i) => (
-                  <p key={i} className="text-blue-100/90 leading-relaxed">{line}</p>
+                  <p key={i} className="text-amber-50/90 leading-relaxed">{line}</p>
                 ))}
               </div>
             </div>
@@ -111,12 +111,12 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
   };
 
   return (
-    <div className="bg-gray-950 px-6 py-12 md:p-12 lg:p-20 min-h-full pb-40">
+    <div className="bg-[#070203] px-6 py-12 md:p-12 lg:p-20 min-h-full pb-40">
       <div className="max-w-3xl mx-auto">
         <header className="mb-12">
-          <div className="flex flex-wrap items-center gap-4 text-sm text-blue-500 mb-6 font-mono tracking-widest">
-            <span className="px-2 py-1 bg-blue-500/10 rounded">CHAPTER {index}</span>
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-amber-300 mb-6 font-mono tracking-widest">
+            <span className="px-2 py-1 bg-red-500/10 rounded">CHAPTER {index}</span>
+            <span className="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
             <span className="text-gray-500">{chapter["written date"]}</span>
             <span className="w-1.5 h-1.5 bg-gray-800 rounded-full"></span>
             <span className="flex items-center gap-1.5 text-gray-400">
@@ -127,7 +127,7 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-8">
             {chapter.title}
           </h1>
-          <div className="h-1 w-20 bg-blue-600 rounded-full mb-12"></div>
+          <div className="h-1 w-20 bg-amber-400 rounded-full mb-12"></div>
         </header>
 
         <article className="story-content text-lg md:text-xl text-gray-200 antialiased leading-relaxed">
@@ -137,7 +137,7 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
         <footer className="mt-24 pb-20 border-t border-gray-800">
           <div className="pt-12 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4">
             <div className="flex flex-col items-center gap-4">
-              <div className="bg-white p-2 rounded-xl shadow-xl shadow-blue-500/10">
+              <div className="bg-white p-2 rounded-xl shadow-xl shadow-amber-500/10">
                 <img 
                   src={publicAssetUrl('qrcode.jpg')}
                   alt="沉默的副驾 公众号" 

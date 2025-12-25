@@ -6,7 +6,7 @@ export interface Chapter {
   prologue: string | null;
   text: string | null;
   link: string | null;
-  父记录: string | null;
+  父记录?: string | null;
 }
 
 export interface AppState {

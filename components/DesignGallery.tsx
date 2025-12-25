@@ -106,7 +106,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
       
       const canvas = await html2canvas(cardRef.current, {
         useCORS: true,
-        backgroundColor: '#111827', // dark background matching the theme
+        backgroundColor: '#120407',
         scale: 2, // higher resolution
       });
 
@@ -131,7 +131,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
   };
 
   return (
-    <div ref={cardRef} className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-blue-500/30 transition-all duration-500 shadow-xl">
+    <div ref={cardRef} className="group bg-gray-900/40 border border-gray-800 rounded-3xl overflow-hidden hover:border-amber-500/30 transition-all duration-500 shadow-xl">
       {/* Image Carousel Container */}
       <div className="aspect-square overflow-hidden bg-gray-950 relative">
         <div 
@@ -170,7 +170,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
                 <div 
                   key={idx}
                   className={`w-1.5 h-1.5 rounded-full transition-all ${
-                    idx === currentImgIdx ? 'bg-blue-400 w-4' : 'bg-white/30'
+                    idx === currentImgIdx ? 'bg-amber-400 w-4' : 'bg-white/30'
                   }`}
                 />
               ))}
@@ -179,7 +179,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
         )}
 
         <div className="absolute top-4 left-4 z-10">
-          <span className="px-3 py-1 bg-blue-500/10 backdrop-blur-md border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest rounded-full">
+          <span className="px-3 py-1 bg-red-500/10 backdrop-blur-md border border-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-widest rounded-full">
             {item.category}
           </span>
         </div>
@@ -188,10 +188,10 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
       {/* Content */}
       <div className="p-8">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+          <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition-colors">
             {item.name}
           </h3>
-          <span className="text-blue-400 font-mono font-bold">{item.price}</span>
+          <span className="text-amber-300 font-mono font-bold">{item.price}</span>
         </div>
         <p className="text-gray-400 text-sm leading-relaxed mb-8 transition-colors">
           {item.description}
@@ -205,7 +205,7 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
             onClick={handleLike}
             className={`p-3 rounded-xl transition-all border flex items-center gap-2 group/like ${
               isLiked 
-                ? 'bg-blue-500/20 border-blue-500/40 text-blue-400' 
+                ? 'bg-red-500/15 border-amber-500/30 text-amber-300' 
                 : 'bg-gray-800 border-gray-700 text-gray-400 hover:text-white hover:border-gray-600'
             }`}
           >
@@ -241,7 +241,7 @@ const DesignGallery: React.FC = () => {
       </div>
 
       {/* Design Concept Section */}
-      <div className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 border border-blue-500/20 rounded-3xl p-8 md:p-12 mb-20 text-center">
+      <div className="bg-gradient-to-br from-red-600/10 to-amber-500/10 border border-amber-500/20 rounded-3xl p-8 md:p-12 mb-20 text-center">
         <h2 className="text-xl md:text-2xl font-bold text-white mb-4">设计理念：沉默的共同演化</h2>
         <p className="max-w-2xl mx-auto text-gray-400 leading-relaxed">
           我们的周边设计不仅仅是商品，更是《沉默的副驾》精神的延伸。
