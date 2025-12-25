@@ -4,6 +4,7 @@ import { X, Rocket, Cpu, Github, Palette, BookOpen, Film } from 'lucide-react';
 import Reader from './components/Reader';
 import DesignGallery from './components/DesignGallery';
 import VideoGallery from './components/VideoGallery';
+import Snowfall from './components/Snowfall';
 import { STORY_DATA } from './constants';
 import { publicAssetUrl } from './assetUrl';
 
@@ -41,6 +42,7 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen h-[100dvh] w-full overflow-hidden bg-[#070203]">
+      <Snowfall />
       <header className="fixed top-0 left-0 right-0 h-16 bg-red-950/70 border-b border-red-900/40 flex items-center justify-between px-4 md:px-8 z-50 backdrop-blur">
         <button
           onClick={() => {
@@ -48,14 +50,17 @@ const App: React.FC = () => {
             setCurrentView('chapters');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex flex-col md:flex-row md:items-baseline md:gap-2 active:scale-95 transition-transform"
+          className="flex flex-col md:flex-row md:items-baseline md:gap-2 active:scale-95 transition-transform group relative"
           title="返回首页"
         >
+          <div className="absolute -top-3 -left-4 text-xl rotate-[-20deg] group-hover:rotate-0 transition-transform duration-500">
+            🎅
+          </div>
           <span className="font-black text-amber-300 text-sm md:text-lg tracking-widest drop-shadow-[0_0_15px_rgba(245,158,11,0.5)] font-serif">
             沉默的副驾
           </span>
-          <span className="font-light text-red-400 text-[10px] md:text-xs tracking-[0.2em] font-mono opacity-80">
-            SilentCopilot
+          <span className="font-light text-red-400 text-[10px] md:text-xs tracking-[0.2em] font-mono opacity-80 flex items-center gap-1">
+            SilentCopilot <span className="text-[8px]">🎄</span>
           </span>
         </button>
 
@@ -136,8 +141,11 @@ const App: React.FC = () => {
                       <div 
                         key={originalIdx}
                         onClick={() => setSelectedIdx(currentIdx)}
-                        className="group bg-gray-900/50 border border-gray-800 p-6 rounded-2xl hover:border-amber-500/40 hover:bg-gray-900 transition-all cursor-pointer flex flex-col h-full shadow-lg hover:shadow-amber-500/5"
+                        className="group bg-gray-900/50 border border-gray-800 p-6 rounded-2xl hover:border-red-500/40 hover:bg-gray-900 transition-all cursor-pointer flex flex-col h-full shadow-lg hover:shadow-red-500/10 relative overflow-hidden"
                       >
+                        <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <span className="text-lg">🎁</span>
+                        </div>
                         <div className="flex items-center gap-3 text-xs text-gray-500 mb-4 uppercase tracking-wider font-medium">
                           <span className="flex items-center gap-1"><Cpu className="w-3 h-3" /> CH {originalIdx + 1}</span>
                           <span className="w-1 h-1 bg-gray-800 rounded-full"></span>
@@ -186,6 +194,9 @@ const App: React.FC = () => {
                   <div className="flex flex-col items-center md:items-end gap-4">
                     <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                       <div className="text-center md:text-right">
+                        <p className="text-amber-500/80 text-[10px] font-bold uppercase tracking-[0.3em] mb-1 animate-pulse">
+                          ✨ Merry Christmas & Happy New Year 🎁
+                        </p>
                         <p className="text-gray-500 text-[10px] font-mono uppercase tracking-[0.2em]">
                           © 2025 沉默的副驾 SilentCopilot
                         </p>

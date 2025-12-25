@@ -193,6 +193,9 @@ const DesignCard: React.FC<{ item: DesignItem }> = ({ item }) => {
             {item.category}
           </span>
         </div>
+        <div className="absolute top-4 right-4 z-10 animate-bounce delay-300">
+          <span className="text-xl">❄️</span>
+        </div>
       </div>
 
       {/* Content */}
