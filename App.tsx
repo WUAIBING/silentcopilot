@@ -51,10 +51,10 @@ const App: React.FC = () => {
           className="flex flex-col md:flex-row md:items-baseline md:gap-2 active:scale-95 transition-transform"
           title="返回首页"
         >
-          <span className="font-black text-amber-300 text-base md:text-xl tracking-widest drop-shadow-[0_0_15px_rgba(245,158,11,0.5)] font-serif">
+          <span className="font-black text-amber-300 text-sm md:text-lg tracking-widest drop-shadow-[0_0_15px_rgba(245,158,11,0.5)] font-serif">
             沉默的副驾
           </span>
-          <span className="font-light text-red-400 text-[10px] md:text-xs uppercase tracking-[0.2em] font-mono opacity-80">
+          <span className="font-light text-red-400 text-[10px] md:text-xs tracking-[0.2em] font-mono opacity-80">
             SilentCopilot
           </span>
         </button>
