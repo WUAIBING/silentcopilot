@@ -58,9 +58,11 @@ const DESIGNS: DesignItem[] = [
     id: 'design-004',
     name: '“沉默的纽带”：象妈妈与小象毛绒玩偶套装',
     category: 'Toy',
-    description: '基于《沉默的副驾》第8章感人情节设计。这套毛绒玩偶捕捉了被迫分离的象妈妈与小象之间的深情。设计提示词：Design a set of stuffed plush toys representing the mother elephant and her calf. The mother elephant should have a gentle, wise expression, while the calf looks up with longing. Use ultra-soft, premium grey plush fabric. The mother elephant has a subtle glowing "Silent Copilot" logo on her ear, symbolizing her journey to the stars. The calf on Earth wears a small heart-shaped tag. The style is heartwarming and cuddly, reflecting the emotional bond and the cost of longevity technology.',
-    images: [],
-    price: 'Free'
+    description: '基于《沉默的副驾》第8章感人情节设计。这套毛绒玩偶捕捉了被迫分离的象妈妈与小象之间的深情。设计体现了母象的智慧慈悲与小象的纯真眷恋。',
+    images: [
+      'toy_elephant_mother_calf.jpeg'
+    ],
+    price: ''
   }
 ];
 
