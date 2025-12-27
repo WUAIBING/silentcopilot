@@ -1,16 +1,20 @@
 
 import React, { useState, useEffect } from 'react';
-import { X, Rocket, Cpu, Github, Palette, BookOpen, Film } from 'lucide-react';
+import { X, Rocket, Cpu, Github, Palette, BookOpen, Film, Music, Clock } from 'lucide-react';
 import Reader from './components/Reader';
 import DesignGallery from './components/DesignGallery';
 import VideoGallery from './components/VideoGallery';
-import Snowfall from './components/Snowfall';
+import MusicGallery from './components/MusicGallery';
+import StarField from './components/StarField';
+import SearchModal from './components/SearchModal';
 import { STORY_DATA } from './constants';
 import { publicAssetUrl } from './assetUrl';
+import { calculateReadingTime, formatReadingTime } from './utils/readingTime';
 
 const App: React.FC = () => {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  const [currentView, setCurrentView] = useState<'chapters' | 'designs' | 'videos'>('chapters');
+  const [currentView, setCurrentView] = useState<'chapters' | 'designs' | 'videos' | 'music'>('chapters');
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const mainRef = React.useRef<HTMLDivElement>(null);
 
   // Sort chapters by latest first (reverse of STORY_DATA)
@@ -23,9 +27,16 @@ const App: React.FC = () => {
     }
   }, [selectedIdx]);
 
-  // Handle keyboard navigation
+  // Handle keyboard navigation and search shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl+K to open search
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchModalOpen(true);
+        return;
+      }
+
       if (selectedIdx !== null) {
         if (e.key === 'ArrowUp') {
           setSelectedIdx(prev => Math.max(0, (prev || 0) - 1));
@@ -42,7 +53,14 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen h-[100dvh] w-full overflow-hidden bg-[#070203]">
-      <Snowfall />
+      <StarField />
+      <SearchModal
+        isOpen={searchModalOpen}
+        onClose={() => setSearchModalOpen(false)}
+        chapters={sortedChapters}
+        allChapters={STORY_DATA}
+        onSelectChapter={(idx) => setSelectedIdx(idx)}
+      />
       <header className="fixed top-0 left-0 right-0 h-16 bg-red-950/70 border-b border-red-900/40 flex items-center justify-between px-4 md:px-8 z-50 backdrop-blur">
         <button
           onClick={() => {
@@ -80,11 +98,10 @@ const App: React.FC = () => {
                 setSelectedIdx(null);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${
-                currentView === 'chapters'
-                  ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
-                  : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
-              }`}
+              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${currentView === 'chapters'
+                ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
+                : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
+                }`}
               title="章节"
             >
               <BookOpen className="w-5 h-5 md:w-6 md:h-6" />
@@ -94,11 +111,10 @@ const App: React.FC = () => {
                 setCurrentView('designs');
                 setSelectedIdx(null);
               }}
-              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${
-                currentView === 'designs'
-                  ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
-                  : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
-              }`}
+              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${currentView === 'designs'
+                ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
+                : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
+                }`}
               title="设计"
             >
               <Palette className="w-5 h-5 md:w-6 md:h-6" />
@@ -108,14 +124,26 @@ const App: React.FC = () => {
                 setCurrentView('videos');
                 setSelectedIdx(null);
               }}
-              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${
-                currentView === 'videos'
-                  ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
-                  : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
-              }`}
+              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${currentView === 'videos'
+                ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
+                : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
+                }`}
               title="电影"
             >
               <Film className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+            <button
+              onClick={() => {
+                setCurrentView('music');
+                setSelectedIdx(null);
+              }}
+              className={`flex items-center justify-center px-3 py-2 md:px-5 md:py-2.5 rounded-2xl border transition-all ${currentView === 'music'
+                ? 'bg-red-500/15 text-amber-300 border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.10)]'
+                : 'bg-red-950/30 text-gray-400 border-red-900/30 hover:border-amber-500/20 hover:text-gray-200'
+                }`}
+              title="音乐"
+            >
+              <Music className="w-5 h-5 md:w-6 md:h-6" />
             </button>
           </div>
         )}
@@ -125,9 +153,18 @@ const App: React.FC = () => {
       <main ref={mainRef} className="flex-1 pt-16 relative overflow-y-auto h-full scroll-smooth">
         {selectedIdx !== null ? (
           <div className="relative min-h-full flex flex-col">
-            <Reader 
-              chapter={sortedChapters[selectedIdx]} 
+            <Reader
+              chapter={sortedChapters[selectedIdx]}
               index={STORY_DATA.indexOf(sortedChapters[selectedIdx]) + 1}
+              onNavigate={(direction) => {
+                if (direction === 'prev' && selectedIdx > 0) {
+                  setSelectedIdx(selectedIdx - 1);
+                } else if (direction === 'next' && selectedIdx < sortedChapters.length - 1) {
+                  setSelectedIdx(selectedIdx + 1);
+                }
+              }}
+              hasPrev={selectedIdx > 0}
+              hasNext={selectedIdx < sortedChapters.length - 1}
             />
           </div>
         ) : (
@@ -137,30 +174,51 @@ const App: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
                   {sortedChapters.map((chapter, currentIdx) => {
                     const originalIdx = STORY_DATA.indexOf(chapter);
+                    const readingTime = calculateReadingTime(chapter.text);
                     return (
-                      <div 
+                      <div
                         key={originalIdx}
                         onClick={() => setSelectedIdx(currentIdx)}
-                        className="group bg-gray-900/50 border border-gray-800 p-6 rounded-2xl hover:border-red-500/40 hover:bg-gray-900 transition-all cursor-pointer flex flex-col h-full shadow-lg hover:shadow-red-500/10 relative overflow-hidden"
+                        className="group bg-gray-900/50 border border-gray-800 p-6 rounded-2xl cursor-pointer flex flex-col h-full shadow-lg relative overflow-hidden
+                                   transition-all duration-300 ease-out
+                                   hover:border-amber-500/40 hover:bg-gray-900 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(245,158,11,0.15)]"
                       >
-                        <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {/* Ambient glow effect on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-amber-500/0 to-red-500/0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl pointer-events-none"></div>
+
+                        {/* Gift icon reveal */}
+                        <div className="absolute top-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
                           <span className="text-lg">🎁</span>
                         </div>
-                        <div className="flex items-center gap-3 text-xs text-gray-500 mb-4 uppercase tracking-wider font-medium">
+
+                        {/* Chapter metadata */}
+                        <div className="flex items-center gap-3 text-xs text-gray-500 mb-4 uppercase tracking-wider font-medium relative z-10">
                           <span className="flex items-center gap-1"><Cpu className="w-3 h-3" /> CH {originalIdx + 1}</span>
                           <span className="w-1 h-1 bg-gray-800 rounded-full"></span>
                           <span>{chapter["written date"]}</span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-amber-300 transition-colors line-clamp-2">
+
+                        {/* Chapter title */}
+                        <h3 className="text-xl font-bold text-white mb-3 transition-colors duration-300 group-hover:text-amber-300 line-clamp-2 relative z-10">
                           {chapter.title}
                         </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-4 flex-1">
+
+                        {/* Chapter prologue */}
+                        <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-4 flex-1 relative z-10">
                           {chapter.prologue || "No summary available for this chapter."}
                         </p>
-                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-800/50">
-                          <span className="text-xs text-gray-600 font-mono">ID: ARCHIVE_{String(originalIdx + 1).padStart(3, '0')}</span>
-                          <span className="text-amber-400 text-sm font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            Read More <Rocket className="w-3 h-3" />
+
+                        {/* Footer with reading time and CTA */}
+                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-800/50 relative z-10">
+                          <div className="flex items-center gap-3 text-xs">
+                            <span className="text-gray-600 font-mono">ID: ARCHIVE_{String(originalIdx + 1).padStart(3, '0')}</span>
+                            <span className="flex items-center gap-1 text-gray-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                              <Clock className="w-3 h-3" />
+                              {formatReadingTime(readingTime)}
+                            </span>
+                          </div>
+                          <span className="text-amber-400 text-sm font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                            Read <Rocket className="w-3 h-3" />
                           </span>
                         </div>
                       </div>
@@ -169,6 +227,8 @@ const App: React.FC = () => {
                 </div>
               ) : currentView === 'designs' ? (
                 <DesignGallery />
+              ) : currentView === 'music' ? (
+                <MusicGallery />
               ) : (
                 <VideoGallery />
               )}
@@ -178,7 +238,7 @@ const App: React.FC = () => {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-gray-900/30 rounded-3xl p-8 md:px-12 border border-gray-800/50">
                   <div className="flex flex-col items-center gap-3">
                     <div className="bg-white p-2 rounded-xl shadow-xl shadow-amber-500/10">
-                      <img 
+                      <img
                         src={publicAssetUrl('qrcode.jpg')}
                         alt="沉默的副驾 公众号"
                         className="w-24 h-24 md:w-28 md:h-28 object-contain"
@@ -190,7 +250,7 @@ const App: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col items-center md:items-end gap-4">
                     <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
                       <div className="text-center md:text-right">
@@ -204,10 +264,10 @@ const App: React.FC = () => {
                           AI Collaborative Archive
                         </p>
                       </div>
-                      <a 
-                        href="https://github.com" 
-                        target="_blank" 
-                        rel="noreferrer" 
+                      <a
+                        href="https://github.com"
+                        target="_blank"
+                        rel="noreferrer"
                         className="p-2.5 bg-gray-800/50 hover:bg-gray-700 rounded-xl text-gray-500 hover:text-white transition-all border border-gray-700/50 shadow-sm"
                         title="View on GitHub"
                       >

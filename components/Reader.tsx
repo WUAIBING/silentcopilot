@@ -1,15 +1,34 @@
 
-import React from 'react';
-import { ExternalLink, Clock, User, Quote, Terminal, MessageSquare } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ExternalLink, Clock, User, Quote, Terminal, MessageSquare, ChevronLeft, ChevronRight, ArrowUp } from 'lucide-react';
 import { Chapter } from '../types';
 import { publicAssetUrl } from '../assetUrl';
 
 interface ReaderProps {
   chapter: Chapter;
   index: number;
+  onNavigate?: (direction: 'prev' | 'next') => void;
+  hasPrev?: boolean;
+  hasNext?: boolean;
 }
 
-const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
+const Reader: React.FC<ReaderProps> = ({ chapter, index, onNavigate, hasPrev = true, hasNext = true }) => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Track scroll position for scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 500;
+      setShowScrollTop(scrolled);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (!chapter) return null;
 
   // Simple formatting for chapters >= 15
@@ -25,11 +44,11 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
   // Formatting function to highlight AI responses and Human prompts for chapters 1-14
   const formatText = (text: string | null) => {
     if (!text) return null;
-    
+
     const aiNames = ['ChatGPT', 'Kimi', 'Claude', 'DeepSeek', '通义千问', '文心一言'];
     const lines = text.split('\n');
     const elements: React.ReactNode[] = [];
-    
+
     let currentAiBlock: { name: string, lines: string[] } | null = null;
     let currentHumanLines: string[] = [];
 
@@ -91,7 +110,7 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
           // If the next line is an AI name, this current line is likely the human prompt
           const nextLine = lines[i + 1]?.trim();
           const nextIsAi = nextLine && aiNames.some(name => nextLine === name || nextLine.startsWith(name + ':') || nextLine.startsWith(name + ' '));
-          
+
           if (nextIsAi) {
             flushAi(i.toString());
             currentHumanLines.push(line);
@@ -134,13 +153,41 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
           {index >= 15 ? renderSimpleText(chapter.text) : formatText(chapter.text)}
         </article>
 
+        {/* Navigation buttons */}
+        {onNavigate && (hasPrev || hasNext) && (
+          <div className="mt-16 flex items-center justify-between gap-4">
+            <button
+              onClick={() => hasPrev && onNavigate('prev')}
+              disabled={!hasPrev}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl border transition-all ${hasPrev
+                ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/50'
+                : 'bg-gray-800/30 border-gray-800 text-gray-600 cursor-not-allowed'
+                }`}
+            >
+              <ChevronLeft className="w-5 h-5" />
+              <span className="font-medium">Previous Chapter</span>
+            </button>
+            <button
+              onClick={() => hasNext && onNavigate('next')}
+              disabled={!hasNext}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl border transition-all ${hasNext
+                ? 'bg-amber-500/10 border-amber-500/30 text-amber-300 hover:bg-amber-500/20 hover:border-amber-500/50'
+                : 'bg-gray-800/30 border-gray-800 text-gray-600 cursor-not-allowed'
+                }`}
+            >
+              <span className="font-medium">Next Chapter</span>
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        )}
+
         <footer className="mt-24 pb-20 border-t border-gray-800">
           <div className="pt-12 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4">
             <div className="flex flex-col items-center gap-4">
               <div className="bg-white p-2 rounded-xl shadow-xl shadow-amber-500/10">
-                <img 
+                <img
                   src={publicAssetUrl('qrcode.jpg')}
-                  alt="沉默的副驾 公众号" 
+                  alt="沉默的副驾 公众号"
                   className="w-24 h-24 md:w-28 md:h-28 object-contain"
                 />
               </div>
@@ -161,6 +208,17 @@ const Reader: React.FC<ReaderProps> = ({ chapter, index }) => {
             </div>
           </div>
         </footer>
+
+        {/* Scroll to top button */}
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 p-4 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-full shadow-2xl shadow-amber-500/20 hover:bg-amber-500/30 hover:border-amber-500/60 transition-all duration-300 z-50 group backdrop-blur-sm"
+            title="Scroll to top"
+          >
+            <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
+        )}
       </div>
     </div>
   );
